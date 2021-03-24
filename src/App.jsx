@@ -1,9 +1,12 @@
 import React from "react";
 import LoginSection from "./pages/LoginSection";
+import { CardProvider } from "./CardContext";
 const App = () => {
   return (
     <div className="App">
-      <LoginSection />
+      <CardProvider>
+        <LoginSection />
+      </CardProvider>
     </div>
   );
 };
