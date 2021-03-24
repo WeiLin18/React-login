@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import Card from "./common/Card";
 import { ReactComponent as DoctorSvg } from "../images/img_doctor_90@3x.svg";
 import { ReactComponent as PatientSvg } from "../images/img_patient_90@3x.svg";
+import CardContext from "../CardContext";
 
 const InputGroup = () => {
-  const [targetCard, setTargetCard] = useState({
-    content: ""
-  });
+  const { targetCard, chooseTargetCard } = useContext(CardContext);
   const handleCardChoose = (val) => {
-    console.log(val);
-    setTargetCard({
+    chooseTargetCard({
       content: val
     });
   };

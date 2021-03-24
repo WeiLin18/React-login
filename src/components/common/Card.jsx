@@ -1,31 +1,48 @@
 import React from "react";
 import styled from "styled-components";
-import { color } from "../../style/variables";
+import { color, rwd } from "../../style/variables";
 import "../../style/styles.scss";
+import CheckIcon from "./CheckIcon";
 const StyledLi = styled.li`
-  padding: 16px 32px;
+  position: relative;
+  padding: 48px 32px;
   border: 2px solid ${color.light};
   border-radius: 4px;
+  :hover {
+    background-color: #fcfcfc;
+  }
+  @media ${rwd.lg} {
+    padding: 16px 32px;
+  }
   &.choosed {
-    border: 2px solid ${color.primary};
+    border: 2px solid ${color.primaryLight};
   }
-  &.success {
-    border: 2px solid ${color.success};
+  .card__icon {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translate(30%, 50%);
+    display: none;
+    &.choosed {
+      display: block;
+    }
   }
-  &.error {
-    border: 2px solid ${color.error};
+  .avatar {
+    height: 80%;
   }
 `;
-const Card = ({ onChoose, className, borderStyle, avatar, children }) => {
+
+const Card = ({ onChoose, className, onChoosed, avatar, children }) => {
   return (
     <StyledLi
-      className={`${className} ${borderStyle}`}
+      className={`${className} ${onChoosed}`}
       onClick={() => {
         onChoose && onChoose(children);
       }}
     >
       {avatar}
       <h3 className="font-sm">{children}</h3>
+      <CheckIcon className={`${onChoosed} card__icon`} />
     </StyledLi>
   );
 };
