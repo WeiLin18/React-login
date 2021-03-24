@@ -15,14 +15,22 @@ const InputGroup = () => {
   };
 
   return (
-    <ul className="d-flex">
+    <ul className="row justify-content-between mb-4 text-center">
       <Card
-        className="mb-4 text-center"
-        borderStyle={targetCard.content === "Doctor" ? "choosed" : ""}
+        className="w-48"
+        onChoosed={targetCard.content === "Doctor" ? "choosed" : ""}
         onChoose={handleCardChoose}
         avatar={<DoctorSvg className="avatar mb-2" />}
       >
         Doctor
+      </Card>
+      <Card
+        className="w-48"
+        onChoosed={targetCard.content === "Patient" ? "choosed" : ""}
+        onChoose={handleCardChoose}
+        avatar={<PatientSvg className="avatar mb-2" />}
+      >
+        Patient
       </Card>
     </ul>
   );
