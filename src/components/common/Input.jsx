@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { color } from "../../style/variables";
 import "../../style/styles.scss";
 const StyledDiv = styled.div`
+  position: relative;
   .imput {
     width: 100%;
     padding: 14px 40px;
@@ -14,6 +15,12 @@ const StyledDiv = styled.div`
     }
     &:focus + .label {
       display: inline-block;
+    }
+    &.success {
+      border: 2px solid ${color.success};
+    }
+    &.error {
+      border: 2px solid ${color.error};
     }
   }
   .label {
@@ -29,6 +36,14 @@ const StyledDiv = styled.div`
     transform: translateY(-50%);
   }
 
+  .remind {
+    color: ${color.error};
+    font-size: 12px;
+    display: block;
+    text-align: right;
+    height: 20px;
+  }
+
   .icon {
     position: absolute;
     top: 50%;
@@ -37,23 +52,31 @@ const StyledDiv = styled.div`
     width: 32px;
     height: 32px;
   }
+  .input__link {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(-20%, -50%);
+    padding-left: 20px;
+    border-left: 2px solid ${color.light};
+  }
 `;
 const Input = ({
-  onSubmit,
+  onChange,
   icon,
+  styleClass,
+  borderStyle,
   labelName,
   inputType,
   placeHolder,
-  errorMessage
+  errorMessage,
+  content
 }) => {
   return (
-    <StyledDiv>
+    <StyledDiv className={styleClass}>
       <span
-        className={
-          errorMessage === ""
-            ? "d-none form__text form__text--warning"
-            : "d-block form__text form__text--warning"
-        }
+        className={`${errorMessage === "" ? "opacity-0" : "opacity-1"} remind
+        `}
       >
         {errorMessage}
       </span>
@@ -61,11 +84,14 @@ const Input = ({
         {icon}
         <input
           type={inputType}
-          className="imput"
+          className={` imput ${borderStyle}`}
           placeholder={placeHolder}
-          // onChange={handleAddOrderItem}
+          onBlur={(e) => {
+            onChange && onChange(e.target.value);
+          }}
         />
         <label className="label">{labelName}</label>
+        {content && <div className="input__link">{content}</div>}
       </div>
     </StyledDiv>
   );

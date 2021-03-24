@@ -2,21 +2,28 @@
   font-family: sans-serif;
 }
 
+ul{
+  list-style: none;
+}
 .po-re{
   position: relative;
+}
+
+.opacity-0{
+  opacity: 0;
+}
+.opacity-1{
+  opacity: 1;
 }
 
 .font-bold {
   font-weight: 700;
 }
 
-.font-xs {
+.font-sm {
   font-size: 14px;
 }
 
-.text-coffee {
-  color: #2e1c06;
-}
 
 .custom-input {
   display: inline-block;
