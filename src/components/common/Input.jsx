@@ -64,7 +64,7 @@ const StyledDiv = styled.div`
 const Input = ({
   onChange,
   icon,
-  styleClass,
+  className,
   borderStyle,
   labelName,
   inputType,
@@ -73,7 +73,7 @@ const Input = ({
   content
 }) => {
   return (
-    <StyledDiv className={styleClass}>
+    <StyledDiv className={className}>
       <span
         className={`${errorMessage === "" ? "opacity-0" : "opacity-1"} remind
         `}

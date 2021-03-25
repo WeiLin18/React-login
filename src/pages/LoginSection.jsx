@@ -14,12 +14,12 @@ const StyledSecton = styled.section`
   background-repeat: repeat-x;
   background-position: center bottom;
   background-image: url(${TownSvg});
-  padding-bottom: 120px;
+  padding: 20px 0 80px;
 `;
 
 const LoginSection = () => {
   const handleLogin = () => {
-    console.log("login");
+    console.log(inputEmailUi.value, inputPasswordUi.value);
   };
   const { targetCard } = useContext(CardContext);
   const [inputEmailUi, setInputEmailUi] = useState({
@@ -47,7 +47,6 @@ const LoginSection = () => {
     }
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (re.test(inputContent)) {
-      console.log(inputContent.split("@")[0]);
       setInputEmailUi({
         stateStyle: "success",
         errorMessage: "",
@@ -118,21 +117,21 @@ const LoginSection = () => {
   }, [inputEmailUi.value]);
 
   return (
-    <StyledSecton className="container pt-5">
+    <StyledSecton className="container">
       <h2 className="text-custom-primary h4 text-center mb-5">
         Choose Account Type
       </h2>
-      <CardList />
-      <p className="text-center font-sm text-dark">
+      <CardList className="mb-5" />
+      <p className="text-center font-sm mb-2 lh-lg">
         Hello {targetCard.content}!
         <br />
         Please fill out the form below to get started
       </p>
-      <form className="row">
+      <form>
         <Input
           inputType="email"
           labelName="Email"
-          styleClass="mb-4 w-100"
+          className="mb-3 w-100"
           placeHolder="abc@gmail.com"
           borderStyle={inputEmailUi.stateStyle}
           errorMessage={inputEmailUi.errorMessage}
@@ -143,14 +142,14 @@ const LoginSection = () => {
           inputType="password"
           labelName="Password"
           placeHolder="Password"
-          styleClass="mb-4 w-100"
+          className="mb-5 w-100"
           borderStyle={inputPasswordUi.stateStyle}
           errorMessage={inputPasswordUi.errorMessage}
           icon={<PasswordSvg className="icon" />}
           content={<Link>Forgot?</Link>}
           onChange={handlePasswordCkeck}
         />
-        <div className="w-100 d-flex justify-content-between ">
+        <div className="w-100 d-flex justify-content-between align-items-center">
           <p>
             No account?<Link className="ml-2">Signup</Link>
           </p>

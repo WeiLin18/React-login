@@ -1,31 +1,6 @@
-
-.App {
-  font-family: sans-serif;
-}
-
-ul{
-  list-style: none;
-  padding: 0;
-}
-.po-re{
-  position: relative;
-}
-
-.w-48{
-  width: 48%;
-}
-
-.opacity-0{
-  opacity: 0;
-}
-.opacity-1{
-  opacity: 1;
-}
+@import './reset.scss';
+@import './base.scss';
+@import './grid.scss';
+@import './utilities.scss';
 
 
-.font-sm {
-  font-size: 14px;
-}
-.text-custom-primary {
-  color: #1EB7EF;
-}

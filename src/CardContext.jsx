@@ -6,7 +6,7 @@ const CardContext = createContext({
 });
 
 export const CardProvider = ({ children }) => {
-  const [targetCard, setTargetCard] = useState({ content: "" });
+  const [targetCard, setTargetCard] = useState({ content: "Doctor" });
 
   return (
     <CardContext.Provider
