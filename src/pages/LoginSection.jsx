@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import Input from "../components/common/Input";
+import InputGroup from "../components/common/InputGroup";
 import Button from "../components/common/Button";
 import Link from "../components/common/Link";
 import CardList from "../components/CardList";
@@ -20,6 +20,9 @@ const StyledSecton = styled.section`
 const LoginSection = () => {
   const handleLogin = () => {
     console.log(inputEmailUi.value, inputPasswordUi.value);
+    // if(!inputEmailUi.value.trim()==='' && !inputPasswordUi.value.trim()===''){
+
+    // }
   };
   const { targetCard } = useContext(CardContext);
   const [inputEmailUi, setInputEmailUi] = useState({
@@ -34,14 +37,16 @@ const LoginSection = () => {
   });
 
   const handleLengthCheck = (inputContent) => {
-    return inputContent.trim() === "" ? false : true;
+    return inputContent.trim() === "" || inputContent.trim().length < 6
+      ? false
+      : true;
   };
   const handleEmailCheck = (inputContent) => {
     if (!handleLengthCheck(inputContent)) {
       setInputEmailUi({
         stateStyle: "error",
-        errorMessage: "不能空白",
-        value: ""
+        errorMessage: "需超過6碼",
+        value: inputContent
       });
       return;
     }
@@ -56,8 +61,24 @@ const LoginSection = () => {
       setInputEmailUi({
         stateStyle: "error",
         errorMessage: "格式不正確",
-        value: ""
+        value: inputContent
       });
+    }
+    console.log(inputPasswordUi.value, "長度");
+    if (inputPasswordUi.value.length >= 6) {
+      if (handleIsWordRepeatCheck(inputContent, inputPasswordUi.value)) {
+        setInputPasswordUi({
+          stateStyle: "error",
+          errorMessage: "密碼任意6碼不能和帳號重複",
+          value: inputContent
+        });
+      } else {
+        setInputPasswordUi({
+          stateStyle: "success",
+          errorMessage: "",
+          value: inputContent
+        });
+      }
     }
   };
 
@@ -65,19 +86,22 @@ const LoginSection = () => {
     if (!handleLengthCheck(inputContent)) {
       setInputPasswordUi({
         stateStyle: "error",
-        errorMessage: "不能空白",
-        value: ""
+        errorMessage: "需超過6碼",
+        value: inputContent
       });
       return;
     }
     if (inputEmailUi.value.length >= 6 && inputContent.length >= 6) {
-      const isInclude = handleIsWordRepeatCheck(inputContent);
+      const isInclude = handleIsWordRepeatCheck(
+        inputContent,
+        inputEmailUi.value
+      );
       if (isInclude) {
-        console.log(inputEmailUi.value, inputContent, "重複");
+        // console.log(inputEmailUi.value, inputContent, "重複");
         setInputPasswordUi({
           stateStyle: "error",
           errorMessage: "密碼任意6碼不能和帳號重複",
-          value: ""
+          value: inputContent
         });
         return;
       }
@@ -89,32 +113,23 @@ const LoginSection = () => {
     });
   };
 
-  const handleIsWordRepeatCheck = (inputContent) => {
+  const handleIsWordRepeatCheck = (AInputContent, BInputContent) => {
     let isInclude = false;
-    for (let i = 0; i < inputEmailUi.value.length; i++) {
-      for (let j = 0; j < inputContent.length; j++) {
-        if (
-          inputEmailUi.value
-            .slice(i, i + 7)
-            .includes(inputContent.slice(j, j + 7))
-        ) {
+    console.log("checkLength");
+    for (let i = 0; i + 5 < AInputContent.length; i++) {
+      for (let j = 0; j + 5 < BInputContent.length; j++) {
+        console.log(
+          "slice",
+          AInputContent.slice(i, i + 6),
+          BInputContent.slice(j, j + 6)
+        );
+        if (AInputContent.slice(i, i + 6) === BInputContent.slice(j, j + 6)) {
           isInclude = true;
         }
       }
     }
     return isInclude;
   };
-  useEffect(() => {
-    if (inputEmailUi.value.length >= 6) {
-      if (handleIsWordRepeatCheck(inputPasswordUi.value)) {
-        setInputPasswordUi({
-          stateStyle: "error",
-          errorMessage: "密碼任意6碼不能和帳號重複",
-          value: ""
-        });
-      }
-    }
-  }, [inputEmailUi.value]);
 
   return (
     <StyledSecton className="container">
@@ -128,17 +143,20 @@ const LoginSection = () => {
         Please fill out the form below to get started
       </p>
       <form>
-        <Input
+        <InputGroup
           inputType="email"
           labelName="Email"
           className="mb-3 w-100"
           placeHolder="abc@gmail.com"
           borderStyle={inputEmailUi.stateStyle}
           errorMessage={inputEmailUi.errorMessage}
-          onChange={handleEmailCheck}
+          onComplete={handleEmailCheck}
+          onEdit={() => {
+            setInputEmailUi({ ...inputEmailUi, stateStyle: "" });
+          }}
           icon={<MailSvg className="icon" />}
         />
-        <Input
+        <InputGroup
           inputType="password"
           labelName="Password"
           placeHolder="Password"
@@ -147,7 +165,10 @@ const LoginSection = () => {
           errorMessage={inputPasswordUi.errorMessage}
           icon={<PasswordSvg className="icon" />}
           content={<Link>Forgot?</Link>}
-          onChange={handlePasswordCkeck}
+          onComplete={handlePasswordCkeck}
+          onEdit={() => {
+            setInputPasswordUi({ ...inputPasswordUi, stateStyle: "" });
+          }}
         />
         <div className="w-100 d-flex justify-content-between align-items-center">
           <p>
