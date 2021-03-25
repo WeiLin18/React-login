@@ -11,7 +11,7 @@ const StyledDiv = styled.div`
 `;
 const CheckIcon = ({ className }) => {
   return (
-    <StyledDiv className={className}>
+    <StyledDiv className={className ? className : ""}>
       <svg width="36" height="36" viewBox="0 0 80 80">
         <polyline
           points="25,43 38,58 58,28"

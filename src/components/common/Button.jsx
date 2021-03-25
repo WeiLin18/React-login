@@ -18,7 +18,7 @@ const StyledButton = styled.button`
 const Button = ({ className, onSubmit, children }) => {
   return (
     <StyledButton
-      className={className}
+      className={className ? className : ""}
       onClick={(e) => {
         e.preventDefault();
         onSubmit && onSubmit();

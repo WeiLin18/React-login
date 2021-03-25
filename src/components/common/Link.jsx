@@ -7,7 +7,9 @@ const StyledLink = styled.a`
   cursor: pointer;
 `;
 const Link = ({ className, children }) => {
-  return <StyledLink className={className}>{children}</StyledLink>;
+  return (
+    <StyledLink className={className ? className : ""}>{children}</StyledLink>
+  );
 };
 
 export default Link;

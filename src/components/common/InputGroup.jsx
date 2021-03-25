@@ -11,7 +11,6 @@ const StyledDiv = styled.div`
     border: 2px solid ${color.light};
     &:focus {
       border: 2px solid ${color.primary};
-      outline: none;
     }
     &:focus + .label {
       display: inline-block;
@@ -61,8 +60,9 @@ const StyledDiv = styled.div`
     border-left: 2px solid ${color.light};
   }
 `;
-const Input = ({
-  onChange,
+const InputGroup = ({
+  onComplete,
+  onEdit,
   icon,
   className,
   borderStyle,
@@ -73,7 +73,7 @@ const Input = ({
   content
 }) => {
   return (
-    <StyledDiv className={className}>
+    <StyledDiv className={className ? className : ""}>
       <span
         className={`${errorMessage === "" ? "opacity-0" : "opacity-1"} remind
         `}
@@ -86,8 +86,11 @@ const Input = ({
           type={inputType}
           className={` imput ${borderStyle}`}
           placeholder={placeHolder}
+          onFocus={() => {
+            onEdit && onEdit();
+          }}
           onBlur={(e) => {
-            onChange && onChange(e.target.value);
+            onComplete && onComplete(e.target.value);
           }}
         />
         <label className="label">{labelName}</label>
@@ -97,4 +100,4 @@ const Input = ({
   );
 };
 
-export default Input;
+export default InputGroup;
