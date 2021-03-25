@@ -13,7 +13,7 @@ const CardList = ({ className }) => {
   };
 
   return (
-    <ul className={`${className} row text-center`}>
+    <ul className={`${className ? className : ""} row text-center`}>
       <li className="grid-6 grid-lg-3 grid-sm-2">
         <Card
           onChoosed={targetCard.content === "Doctor" ? "choosed" : ""}

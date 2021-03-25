@@ -5,6 +5,11 @@ import Button from "../components/common/Button";
 import Link from "../components/common/Link";
 import CardList from "../components/CardList";
 import CardContext from "../CardContext";
+import {
+  handleIsWordRepeatCheck,
+  handleLengthCheck,
+  handleValidEmailCheck
+} from "../mixins";
 import { ReactComponent as MailSvg } from "../images/mail.svg";
 import { ReactComponent as PasswordSvg } from "../images/password.svg";
 import TownSvg from "../images/img_town_370x170@3x.svg";
@@ -20,9 +25,6 @@ const StyledSecton = styled.section`
 const LoginSection = () => {
   const handleLogin = () => {
     console.log(inputEmailUi.value, inputPasswordUi.value);
-    // if(!inputEmailUi.value.trim()==='' && !inputPasswordUi.value.trim()===''){
-
-    // }
   };
   const { targetCard } = useContext(CardContext);
   const [inputEmailUi, setInputEmailUi] = useState({
@@ -36,13 +38,8 @@ const LoginSection = () => {
     value: ""
   });
 
-  const handleLengthCheck = (inputContent) => {
-    return inputContent.trim() === "" || inputContent.trim().length < 6
-      ? false
-      : true;
-  };
   const handleEmailCheck = (inputContent) => {
-    if (!handleLengthCheck(inputContent)) {
+    if (!handleLengthCheck(inputContent, 6)) {
       setInputEmailUi({
         stateStyle: "error",
         errorMessage: "需超過6碼",
@@ -50,8 +47,7 @@ const LoginSection = () => {
       });
       return;
     }
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (re.test(inputContent)) {
+    if (handleValidEmailCheck(inputContent)) {
       setInputEmailUi({
         stateStyle: "success",
         errorMessage: "",
@@ -64,7 +60,7 @@ const LoginSection = () => {
         value: inputContent
       });
     }
-    console.log(inputPasswordUi.value, "長度");
+
     if (inputPasswordUi.value.length >= 6) {
       if (handleIsWordRepeatCheck(inputContent, inputPasswordUi.value)) {
         setInputPasswordUi({
@@ -83,7 +79,7 @@ const LoginSection = () => {
   };
 
   const handlePasswordCkeck = (inputContent) => {
-    if (!handleLengthCheck(inputContent)) {
+    if (!handleLengthCheck(inputContent, 6)) {
       setInputPasswordUi({
         stateStyle: "error",
         errorMessage: "需超過6碼",
@@ -97,7 +93,6 @@ const LoginSection = () => {
         inputEmailUi.value
       );
       if (isInclude) {
-        // console.log(inputEmailUi.value, inputContent, "重複");
         setInputPasswordUi({
           stateStyle: "error",
           errorMessage: "密碼任意6碼不能和帳號重複",
@@ -111,24 +106,6 @@ const LoginSection = () => {
       errorMessage: "",
       value: inputContent
     });
-  };
-
-  const handleIsWordRepeatCheck = (AInputContent, BInputContent) => {
-    let isInclude = false;
-    console.log("checkLength");
-    for (let i = 0; i + 5 < AInputContent.length; i++) {
-      for (let j = 0; j + 5 < BInputContent.length; j++) {
-        console.log(
-          "slice",
-          AInputContent.slice(i, i + 6),
-          BInputContent.slice(j, j + 6)
-        );
-        if (AInputContent.slice(i, i + 6) === BInputContent.slice(j, j + 6)) {
-          isInclude = true;
-        }
-      }
-    }
-    return isInclude;
   };
 
   return (
