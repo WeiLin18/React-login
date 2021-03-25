@@ -19,7 +19,8 @@ const StyledSecton = styled.section`
   background-repeat: repeat-x;
   background-position: center bottom;
   background-image: url(${TownSvg});
-  padding: 20px 0 80px;
+  padding-top: 20px;
+  padding-bottom: 80px;
 `;
 
 const LoginSection = () => {

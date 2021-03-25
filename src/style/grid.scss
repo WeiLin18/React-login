@@ -10,17 +10,6 @@ $grid-sm-column : 4;
 
 
 
-// container
-// ----------------------------------------------------------------------
-$container-max-widths: 1400px;
-$container-padding: 40px;
-
-
-
-$container-lg-padding: 20px;
-$container-sm-padding: 16px;
-
-//------------------
 $break-points: (
 xs: 414px, //mobile-xs
 sm: 576px, //mobile-sm
@@ -62,6 +51,17 @@ xxl: 1400px);
       @content;
   }
 }
+
+// container
+// ----------------------------------------------------------------------
+$container-max-widths: 1400px;
+$container-padding: 40px;
+
+
+
+$container-lg-padding: 20px;
+$container-sm-padding: 16px;
+
 
 %no-gutter {
   margin: 0;
