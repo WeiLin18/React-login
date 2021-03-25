@@ -1,3 +1,4 @@
+$primary: #1EB7EF;
 .po-re{
   position: relative;
 }
@@ -5,6 +6,7 @@
 .opacity-0{
   opacity: 0;
 }
+
 .opacity-1{
   opacity: 1;
 }
@@ -12,8 +14,9 @@
 .font-sm {
   font-size: 14px;
 }
+
 .text-custom-primary {
-  color: var(--my-primary);
+  color: $primary;
 }
 
 .lh-lg{
